@@ -5,6 +5,7 @@ from quotetutorial.items import QuotetutorialItem
 
 class QuoteSpider(scrapy.Spider):
     name = 'amazon'
+    page_number = 2
     start_urls = [
         'https://www.amazon.in/s?k=phones&ref=nb_sb_noss_2'
     ]
@@ -21,4 +22,9 @@ class QuoteSpider(scrapy.Spider):
         items['rating'] = rating
             
         yield items
+
+        next_page = 'https://www.amazon.in/s?k=phones&page='+ str(QuoteSpider.page_number) +'&qid=1592587195&ref=sr_pg_2'
+        if QuoteSpider.page_number<=100:
+            QuoteSpider.page_number +=1
+            yield response.follow(next_page, callback = self.parse)
             
