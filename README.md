@@ -6,6 +6,7 @@ Pre- requisites :-
  - Install Scrapy thorugh Anaconda prompt with command 'conda install scrapy'
  
  IDE used :- Visual Studio Code
+ 
  Frame work used :- Scrapy
  
  Project Breakdown :-
