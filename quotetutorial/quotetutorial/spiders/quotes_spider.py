@@ -25,8 +25,8 @@ class QuoteSpider(scrapy.Spider):
          yield items
          
 
-        #next_page = 'https://www.amazon.in/s?k=phones&page='+ str(QuoteSpider.page_number) +'&qid=1592587195&ref=sr_pg_2'
-        #if QuoteSpider.page_number<=100:
-        #   QuoteSpider.page_number +=1
-        #  yield response.follow(next_page, callback = self.parse)
+        next_page = 'https://www.amazon.in/s?k=phones&page='+ str(QuoteSpider.page_number) +'&qid=1592587195&ref=sr_pg_2'
+        if QuoteSpider.page_number<=50:
+           QuoteSpider.page_number +=1
+           yield response.follow(next_page, callback = self.parse)
             
