@@ -14,4 +14,5 @@ class QuotetutorialItem(scrapy.Item):
      product_name = scrapy.Field()
      price = scrapy.Field()
      rating = scrapy.Field()
+     hrefs = scrapy.Field()
     
