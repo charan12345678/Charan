@@ -23,14 +23,19 @@ class QuoteSpider(scrapy.Spider):
          items['product_name'] = product_name
          items['price'] = price
          items['rating'] = rating
-         items['hrefs'] = hrefs
-            
+         items['hrefs'] = hrefs   
          yield items
 
-    def parse_config(self, response):
-        for href in response.css(".a-text-normal::attr(href)"):
-            url = response.urljoin(href.extract_first())
-            yield scrapy.Request(url, callback = self.parse_page)
+        for j in all_items:
+            href = j.css('.a-text-normal::attr(href)').extract_first()
+            if href is not None:
+                yield response.follow(href,callback =self.parse_page)
+            
+
+    #def parse_config(self, response):
+     #   for href in response.css(".a-text-normal::attr(href)"):
+      #      url = response.urljoin(href.extract_first())
+       #     yield scrapy.Request(url, callback = self.parse_page)
 
     def parse_page(self, response):
         labels = response.css('.col1 .label::text').extract()
