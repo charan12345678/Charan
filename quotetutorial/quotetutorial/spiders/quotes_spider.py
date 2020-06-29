@@ -12,20 +12,20 @@ class QuoteSpider(scrapy.Spider):
     ]
 
     def parse(self,response):
-        items = QuotetutorialItem()
+        #items = QuotetutorialItem()
         all_items = response.css('div.s-latency-cf-section')
         for i in all_items:
-         product_name = i.css('.a-color-base.a-text-normal::text').extract()
-         price = i.css('.a-price-whole').css('::text').extract()
+         #product_name = i.css('.a-color-base.a-text-normal::text').extract()
+         #price = i.css('.a-price-whole').css('::text').extract()
          #rating = i.css('.aok-align-bottom').css('::text').extract()
          hrefs = i.css('.a-text-normal::attr(href)').extract_first()
 
-         items['product_name'] = product_name
-         items['price'] = price
+         #items['product_name'] = product_name
+         #items['price'] = price
          #items['rating'] = rating
          #items['hrefs'] = hrefs 
 
-         yield items
+         #yield items
 
          if hrefs is not None:
              yield response.follow(hrefs,callback =self.parse_page)  
@@ -48,32 +48,29 @@ class QuoteSpider(scrapy.Spider):
         #news = Newclass()
         #labels = response.css('.col1 .label::text').extract()
         values = response.css('.col1 .value::text').extract()
-        #product_name = response.css('#productTitle::text').extract_first().strip()
-        #price = response.css('#priceblock_ourprice::text').extract_first().strip() 
-
-
-            
-            
-        #rating = response.css('.a-star').css('::text').extract_first().strip()
+        product_name = response.css('#productTitle::text').extract_first().strip()
+        price = response.css('#priceblock_ourprice::text').extract_first()
+        #price = response.css('#priceblock_ourprice::text').extract_first().replace('₹\xa0', '')
+        rating = response.css('.a-star-3-5').css('::text').extract_first()
 
         #items['labels'] = labels
         items['values'] = values
-        #items['product_name'] = product_name
-        #items['price'] = price
-        #items['rating'] = rating
+        items['product_name'] = product_name
+        items['price'] = price
+        items['rating'] = rating
 
         items['OS'] = items['values'][0]
         items['RAM'] = items['values'][1]
-        items['Item_weight'] = items['values'][2]
+        #items['Item_weight'] = items['values'][2]
         items['Product_Dimensions'] = items['values'][3]
-        items['Item_model'] = items['values'][4]
-        items['Wireless'] = items['values'][5]
-        items['connectivity'] = items['values'][6]
-        items['special_features'] = items['values'][7]
-        items['Display_technology'] = items['values'][8]
-        items['camera'] = items['values'][10]
-        items['form_factor'] = items['values'][9]
-        items['Battery_Power_Rating'] = items['values'][14]
+        #items['Item_model'] = items['values'][4]
+        #items['Wireless'] = items['values'][5]
+        #items['connectivity'] = items['values'][6]
+        #items['special_features'] = items['values'][7]
+        #items['Display_technology'] = items['values'][8]
+        #items['camera'] = items['values'][10]
+        #items['form_factor'] = items['values'][9]
+        #items['Battery_Power_Rating'] = items['values'][14]
 
         yield items
 
